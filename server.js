@@ -14,7 +14,7 @@ const BASE_URL =
 // Database
 // =========================
 
-const db = new Database("database.db");
+const db = new Database("/app/data/database.db");
 
 db.prepare(`
     CREATE TABLE IF NOT EXISTS urls (
