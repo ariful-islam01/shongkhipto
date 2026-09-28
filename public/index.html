@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Gagetz — URL Shortener</title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            min-height: 100vh;
+
+            font-family:
+                Inter,
+                Arial,
+                sans-serif;
+
+            background:
+
+                radial-gradient(
+                    circle at 20% 20%,
+                    rgba(99, 102, 241, 0.18),
+                    transparent 35%
+                ),
+
+                radial-gradient(
+                    circle at 80% 80%,
+                    rgba(168, 85, 247, 0.15),
+                    transparent 35%
+                ),
+
+                #070711;
+
+            color: white;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 24px;
+
+        }
+
+
+        .container {
+
+            width: 100%;
+
+            max-width: 720px;
+
+            text-align: center;
+
+        }
+
+
+        /* =========================
+           Logo
+        ========================= */
+
+        .logo {
+
+            font-size: 32px;
+
+            font-weight: 800;
+
+            letter-spacing: -1px;
+
+            margin-bottom: 14px;
+
+        }
+
+
+        .logo span {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #8b5cf6,
+                    #6366f1
+                );
+
+            -webkit-background-clip: text;
+
+            -webkit-text-fill-color: transparent;
+
+        }
+
+
+        /* =========================
+           Heading
+        ========================= */
+
+        h1 {
+
+            font-size:
+                clamp(38px, 7vw, 64px);
+
+            line-height: 1.05;
+
+            letter-spacing: -2.5px;
+
+            font-weight: 800;
+
+            margin-bottom: 18px;
+
+        }
+
+
+        .gradient-text {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ffffff,
+                    #a78bfa,
+                    #818cf8
+                );
+
+            -webkit-background-clip: text;
+
+            -webkit-text-fill-color: transparent;
+
+        }
+
+
+        .subtitle {
+
+            color: #a1a1b5;
+
+            font-size: 17px;
+
+            line-height: 1.6;
+
+            max-width: 540px;
+
+            margin: 0 auto 42px;
+
+        }
+
+
+        /* =========================
+           Main Card
+        ========================= */
+
+        .card {
+
+            background:
+                rgba(255, 255, 255, 0.055);
+
+            border:
+                1px solid rgba(255, 255, 255, 0.1);
+
+            backdrop-filter: blur(20px);
+
+            -webkit-backdrop-filter: blur(20px);
+
+            border-radius: 24px;
+
+            padding: 10px;
+
+            box-shadow:
+
+                0 25px 80px
+                rgba(0, 0, 0, 0.45),
+
+                inset 0 1px
+                rgba(255, 255, 255, 0.05);
+
+        }
+
+
+        /* =========================
+           URL Input
+        ========================= */
+
+        .input-wrapper {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            background:
+                rgba(0, 0, 0, 0.25);
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.08);
+
+            border-radius: 17px;
+
+            padding: 6px;
+
+        }
+
+
+        .link-icon {
+
+            width: 46px;
+
+            height: 46px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            color: #a78bfa;
+
+            font-size: 21px;
+
+        }
+
+
+        input {
+
+            flex: 1;
+
+            min-width: 0;
+
+            background: transparent;
+
+            border: none;
+
+            outline: none;
+
+            color: white;
+
+            font-size: 15px;
+
+            padding: 15px 5px;
+
+        }
+
+
+        input::placeholder {
+
+            color: #66667a;
+
+        }
+
+
+        /* =========================
+           Main Button
+        ========================= */
+
+        button {
+
+            border: none;
+
+            outline: none;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #8b5cf6,
+                    #6366f1
+                );
+
+            color: white;
+
+            font-weight: 700;
+
+            font-size: 14px;
+
+            padding: 15px 24px;
+
+            border-radius: 13px;
+
+            cursor: pointer;
+
+            transition: 0.2s ease;
+
+            white-space: nowrap;
+
+        }
+
+
+        button:hover {
+
+            transform:
+                translateY(-1px);
+
+            box-shadow:
+                0 8px 25px
+                rgba(99, 102, 241, 0.35);
+
+        }
+
+
+        button:active {
+
+            transform:
+                translateY(0);
+
+        }
+
+
+        /* =========================
+           Custom Code
+        ========================= */
+
+        .custom-wrapper {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 4px;
+
+            margin-top: 10px;
+
+            padding: 0 15px;
+
+            min-height: 48px;
+
+            background:
+                rgba(0, 0, 0, 0.2);
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.08);
+
+            border-radius: 14px;
+
+            color: #77778d;
+
+            font-size: 14px;
+
+            text-align: left;
+
+        }
+
+
+        .custom-wrapper input {
+
+            flex: 1;
+
+            padding: 10px 4px;
+
+            color: #c4b5fd;
+
+            font-weight: 600;
+
+            font-size: 14px;
+
+        }
+
+
+        /* =========================
+           Result
+        ========================= */
+
+        .result {
+
+            display: none;
+
+            margin-top: 14px;
+
+            background:
+                rgba(99, 102, 241, 0.08);
+
+            border:
+                1px solid
+                rgba(139, 92, 246, 0.25);
+
+            border-radius: 17px;
+
+            padding: 15px;
+
+            text-align: left;
+
+        }
+
+
+        .result-label {
+
+            font-size: 11px;
+
+            color: #85859a;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+
+            margin-bottom: 7px;
+
+        }
+
+
+        .result-row {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+        }
+
+
+        .short-url {
+
+            flex: 1;
+
+            min-width: 0;
+
+            color: #c4b5fd;
+
+            font-weight: 600;
+
+            font-size: 15px;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+
+            white-space: nowrap;
+
+        }
+
+
+        .copy-btn {
+
+            background:
+                rgba(255, 255, 255, 0.08);
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.1);
+
+            padding: 9px 14px;
+
+            font-size: 12px;
+
+        }
+
+
+        .copy-btn:hover {
+
+            background:
+                rgba(255, 255, 255, 0.13);
+
+            box-shadow: none;
+
+        }
+
+
+        /* =========================
+           Error
+        ========================= */
+
+        .error {
+
+            color: #fca5a5;
+
+            font-size: 13px;
+
+            margin-top: 12px;
+
+            display: none;
+
+        }
+
+
+        /* =========================
+           Footer
+        ========================= */
+
+        .footer {
+
+            margin-top: 28px;
+
+            color: #555568;
+
+            font-size: 12px;
+
+        }
+
+
+        .footer span {
+
+            color: #77778d;
+
+        }
+
+
+        /* =========================
+           Mobile
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            body {
+
+                padding: 18px;
+
+            }
+
+
+            .logo {
+
+                font-size: 27px;
+
+            }
+
+
+            h1 {
+
+                font-size: 42px;
+
+                letter-spacing: -1.8px;
+
+            }
+
+
+            .subtitle {
+
+                font-size: 15px;
+
+                margin-bottom: 30px;
+
+            }
+
+
+            .input-wrapper {
+
+                flex-direction: column;
+
+                padding: 8px;
+
+                align-items: stretch;
+
+            }
+
+
+            .link-icon {
+
+                display: none;
+
+            }
+
+
+            input {
+
+                padding: 15px;
+
+            }
+
+
+            button {
+
+                width: 100%;
+
+            }
+
+
+            .result-row {
+
+                align-items: stretch;
+
+                flex-direction: column;
+
+            }
+
+
+            .copy-btn {
+
+                width: 100%;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <main class="container">
+
+
+        <div class="logo">
+
+            <span>gagetz</span>
+
+        </div>
+
+
+        <h1>
+
+            Short links.<br>
+
+            <span class="gradient-text">
+                Made simple.
+            </span>
+
+        </h1>
+
+
+        <p class="subtitle">
+
+            Turn long URLs into short,
+            clean and easy-to-share links.
+
+        </p>
+
+
+        <div class="card">
+
+
+            <!-- Long URL -->
+
+            <div class="input-wrapper">
+
+                <div class="link-icon">
+                    🔗
+                </div>
+
+
+                <input
+                    id="url"
+                    type="url"
+                    placeholder="Paste your long URL here..."
+                    autocomplete="off"
+                >
+
+
+                <button onclick="shortenUrl()">
+
+                    Shorten URL
+
+                </button>
+
+            </div>
+
+
+            <!-- Custom Code -->
+
+            <div class="custom-wrapper">
+
+                <span>
+                    gagetz.store/
+                </span>
+
+
+                <input
+                    id="customCode"
+                    type="text"
+                    maxlength="100"
+                    placeholder="custom-code"
+                    autocomplete="off"
+                >
+
+            </div>
+
+
+            <!-- Error -->
+
+            <div
+                id="error"
+                class="error">
+            </div>
+
+
+            <!-- Result -->
+
+            <div
+                id="result"
+                class="result">
+
+                <div class="result-label">
+
+                    Your short link
+
+                </div>
+
+
+                <div class="result-row">
+
+
+                    <div
+                        id="shortUrl"
+                        class="short-url">
+                    </div>
+
+
+                    <button
+                        class="copy-btn"
+                        onclick="copyUrl()">
+
+                        Copy
+
+                    </button>
+
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="footer">
+
+            Simple
+            &nbsp;•&nbsp;
+            Fast
+            &nbsp;•&nbsp;
+            <span>Personal</span>
+
+        </div>
+
+
+    </main>
+
+
+    <script>
+
+
+        // =========================
+        // Shorten URL
+        // =========================
+
+        async function shortenUrl() {
+
+
+            const input =
+                document.getElementById("url");
+
+
+            const customInput =
+                document.getElementById("customCode");
+
+
+            const result =
+                document.getElementById("result");
+
+
+            const shortUrl =
+                document.getElementById("shortUrl");
+
+
+            const error =
+                document.getElementById("error");
+
+
+            const url =
+                input.value.trim();
+
+
+            const customCode =
+                customInput.value
+                    .trim()
+                    .toLowerCase();
+
+
+            error.style.display = "none";
+
+            result.style.display = "none";
+
+
+            // =========================
+            // URL validation
+            // =========================
+
+            if (!url) {
+
+                error.innerText =
+                    "Please enter a URL.";
+
+                error.style.display =
+                    "block";
+
+                return;
+
+            }
+
+
+            try {
+
+                new URL(url);
+
+            } catch {
+
+                error.innerText =
+                    "Please enter a valid URL.";
+
+                error.style.display =
+                    "block";
+
+                return;
+
+            }
+
+
+            // =========================
+            // Custom code validation
+            // =========================
+
+            if (customCode) {
+
+                if (customCode.length > 100) {
+
+                    error.innerText =
+                        "Custom code cannot be longer than 100 characters.";
+
+                    error.style.display =
+                        "block";
+
+                    return;
+
+                }
+
+
+                if (!/^[a-z0-9-]+$/.test(customCode)) {
+
+                    error.innerText =
+                        "Custom code can only contain lowercase letters, digits, and hyphens.";
+
+                    error.style.display =
+                        "block";
+
+                    return;
+
+                }
+
+            }
+
+
+            try {
+
+
+                const response =
+                    await fetch(
+                        "/api/shorten",
+                        {
+
+                            method: "POST",
+
+                            headers: {
+
+                                "Content-Type":
+                                    "application/json"
+
+                            },
+
+                            body: JSON.stringify({
+
+                                url: url,
+
+                                customCode:
+                                    customCode
+
+                            })
+
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    error.innerText =
+                        data.error ||
+                        "Something went wrong.";
+
+                    error.style.display =
+                        "block";
+
+                    return;
+
+                }
+
+
+                shortUrl.innerText =
+                    data.shortUrl;
+
+
+                result.style.display =
+                    "block";
+
+
+            } catch (err) {
+
+
+                error.innerText =
+                    "Unable to connect to server.";
+
+
+                error.style.display =
+                    "block";
+
+            }
+
+        }
+
+
+        // =========================
+        // Copy URL
+        // =========================
+
+        async function copyUrl() {
+
+
+            const shortUrl =
+                document
+                    .getElementById("shortUrl")
+                    .innerText;
+
+
+            await navigator
+                .clipboard
+                .writeText(shortUrl);
+
+
+            const button =
+                document.querySelector(
+                    ".copy-btn"
+                );
+
+
+            button.innerText =
+                "Copied ✓";
+
+
+            setTimeout(() => {
+
+                button.innerText =
+                    "Copy";
+
+            }, 1500);
+
+        }
+
+
+        // =========================
+        // Enter key
+        // =========================
+
+        document
+            .getElementById("url")
+            .addEventListener(
+                "keydown",
+                function (event) {
+
+                    if (event.key === "Enter") {
+
+                        shortenUrl();
+
+                    }
+
+                }
+            );
+
+
+        // =========================
+        // Custom code input
+        // Force lowercase
+        // Allow a-z, 0-9 and hyphen
+        // =========================
+
+        document
+            .getElementById("customCode")
+            .addEventListener(
+                "input",
+                function () {
+
+                    this.value =
+                        this.value
+                            .toLowerCase()
+                            .replace(
+                                /[^a-z0-9-]/g,
+                                ""
+                            );
+
+                }
+            );
+
+    </script>
+
+
+</body>
+
+</html>
