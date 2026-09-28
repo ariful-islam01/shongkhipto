@@ -33,7 +33,11 @@ db.prepare(`
 app.use(express.json());
 
 app.use(express.static("public"));
-
+app.get("/api/config", (req, res) => {
+    res.json({
+        baseUrl: BASE_URL
+    });
+});
 
 // =========================
 // Generate Random 3-Character Code

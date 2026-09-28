@@ -10,7 +10,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Gagetz — URL Shortener</title>
+    <title>Shongkhipto — URL Shortener</title>
 
 
     <style>
@@ -605,7 +605,7 @@
 
         <div class="logo">
 
-            <span>gagetz</span>
+            <span>Shongkhipto</span>
 
         </div>
 
@@ -662,9 +662,7 @@
 
             <div class="custom-wrapper">
 
-                <span>
-                    gagetz.store/
-                </span>
+                <span id="domainPrefix"></span>
 
 
                 <input
@@ -740,6 +738,29 @@
 
 
     <script>
+        async function loadConfig() {
+
+    try {
+
+        const response =
+            await fetch("/api/config");
+
+        const config =
+            await response.json();
+
+        document.getElementById("domainPrefix").innerText =
+            config.baseUrl.replace(/\/$/, "") + "/";
+
+    } catch (error) {
+
+        document.getElementById("domainPrefix").innerText =
+            "";
+
+    }
+
+}
+
+loadConfig();
 
 
         // =========================
